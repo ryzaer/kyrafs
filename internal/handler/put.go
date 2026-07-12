@@ -68,7 +68,12 @@ func Put(w http.ResponseWriter, r *http.Request) {
 	// w.Header().Set("Content-Type", "application/json")
 	// json.NewEncoder(w).Encode(resp)
 
-	cmd := exec.Command("python", "engine/put.py", dstPath)
+	cmd := exec.Command(
+		"python",
+		"engine/main.py",
+		"put",
+		dstPath,
+	)
 
 	output, err := cmd.Output()
 
