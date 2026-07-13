@@ -120,3 +120,8 @@ func (c *Config) Volume(name string) string {
 
 	return c.Get("volume:"+name, "path")
 }
+
+// related put key
+func (c *Config) PutKey() string {
+	return c.Get("storage", "put_key")
+}

@@ -5,8 +5,9 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"os/exec"
 	"path/filepath"
+
+	"github.com/ryzaer/kyrafs/internal/app"
 )
 
 func Put(w http.ResponseWriter, r *http.Request) {
@@ -68,19 +69,18 @@ func Put(w http.ResponseWriter, r *http.Request) {
 	// w.Header().Set("Content-Type", "application/json")
 	// json.NewEncoder(w).Encode(resp)
 
-	cmd := exec.Command(
-		"python",
-		"engine/main.py",
+	output, err := app.ExecuteEngine(
 		"put",
+		"--file",
 		dstPath,
 	)
 
-	output, err := cmd.Output()
-
 	if err != nil {
-
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-
+		http.Error(
+			w,
+			err.Error(),
+			http.StatusInternalServerError,
+		)
 		return
 	}
 

@@ -23,11 +23,20 @@ func Root() string {
 	return root
 }
 
-func Path(parts ...string) string {
+func Path(name string) string {
+	return filepath.Join(
+		ExecutableDir(),
+		name,
+	)
+}
 
-	items := []string{root}
+func ExecutableDir() string {
 
-	items = append(items, parts...)
+	exe, err := os.Executable()
 
-	return filepath.Join(items...)
+	if err != nil {
+		return "."
+	}
+
+	return filepath.Dir(exe)
 }

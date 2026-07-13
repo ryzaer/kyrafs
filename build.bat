@@ -13,10 +13,9 @@ if exist product rmdir /S /Q product
 
 mkdir product
 mkdir product\win
-mkdir product\win\storage
 
 echo.
-echo [1/3] Build Go Daemon...
+echo [1/2] Build Go Daemon...
 
 go build -ldflags="-s -w" ^
 -o product\win\kyrafs.exe ^
@@ -25,7 +24,7 @@ go build -ldflags="-s -w" ^
 if errorlevel 1 goto error
 
 echo.
-echo [2/3] Build Python Engine...
+echo [2/2] Build Python Engine...
 
 pyinstaller ^
 --clean ^
@@ -37,16 +36,19 @@ engine\main.py
 if errorlevel 1 goto error
 
 echo.
-echo [3/3] Copy Configuration...
-
-copy config\kyrafs.ini product\win\ >nul
-
-echo.
 echo ===================================
 echo Build Success
 echo ===================================
 
 tree product
+
+echo.
+echo Next steps:
+echo.
+echo     cd product\win
+echo     kyrafs init
+echo     kyrafs serve
+echo.
 
 pause
 exit
